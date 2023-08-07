@@ -1,0 +1,99 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import RichTextArea from "@Global/Components/Basic/RichTextArea/index";
+
+<Meta title="USAGE GUIDE/RichTextArea" component={RichTextArea} />
+
+export const Template = args => <RichTextArea {...args} />;
+
+
+<Story 
+name="Controlled"
+args={{ 
+  label: 'Label',
+  hasLabel: true,
+  id: 'editor',
+  hasError: false,
+}}>
+{Template.bind({})}
+</Story>
+
+# RichTextArea Example
+
+[Go to example of how parent controls this](?path=/docs/docs-richtextarea--controlled-example)
+
+## Usage
+
+This  component is used to render a rich text area with wysiwyg toolbar
+
+### Controlled Component
+
+It's parent will always handle the editor value  
+
+it is reliant on the parent's `useState` hook to handle the value
+
+### Parent Example
+
+#### Imports
+
+```js
+import React, { useState } from "react";
+import "../../App.css";
+import RichTextArea from "../../Components/Basic/RichTextArea/index";
+import { ContentState, convertToRaw, EditorState } from "draft-js";
+import htmlToDraft from "html-to-draftjs";
+import draftToHtml from "draftjs-to-html";
+```
+
+#### Parent State Hooks
+
+```tsx
+const TypicalParentExample: React.FunctionComponent<IParent.IProps> = (): JSX.Element => {
+    //
+    let editorStateContent = "";
+
+    if (typeof window !== "undefined") {
+        const contentBlock = htmlToDraft("");
+        const contentState = ContentState.createFromBlockArray(
+            contentBlock.contentBlocks,
+        );
+        editorStateContent = EditorState.createWithContent(contentState);
+    }
+
+    const [editorState, setEditorState] = useState(editorStateContent);
+
+    // TO use for form values submission
+    const converted = draftToHtml(
+        convertToRaw(editorState.getCurrentContent()),
+    );
+
+```
+```jsx
+    return (
+        <React.Fragment>
+         <RichTextArea 
+            // ... other props required by the component
+            hasLabel={true}
+            label="Rich Text Area"
+            hasError={false}
+            width={100}
+            placeholder="Enter text here..."
+            // props from parent
+            editorState={editorState} 
+            setEditorState={setEditorState} />
+        </React.Fragment>
+    );
+};
+
+export default RichTextArea;
+```
+
+
+
+### Related
+
+<!-- [Link](?path=/docs/components-link--link-regular) -->
+
+### Reference
+
+<!-- [Carbon Design System Usage for Buttons](https://next.carbondesignsystem.com/components/button) -->

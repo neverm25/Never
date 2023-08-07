@@ -1,0 +1,190 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+
+<Meta title="USAGE GUIDE/Form Fields" />
+
+## Usage
+
+This component is used to render a Form with given feild configurations
+
+## Imports
+
+```js
+//[These imports are must]
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
+import { InputHelperProps } from "@Helpers/Formik/formikInputFields.props";
+import { createInputFields } from "@Helpers/Formik/formikMultipleInputFields.helpers";
+
+//[These imports are not a must have one]
+import { SearchIcon } from "@Components/Icons";
+import { getRichTextAreaMinHeight } from "src/helpers/Formik/richTextEditor.helpers";
+```
+
+## Field Props
+
+```js
+NOTE: `Best practice is to always include type while creating props,
+since it will help us to find errors and also provide with autocomplete`;
+```
+
+### Input Field Props
+
+```ts
+//input field
+const textFieldProps: InputHelperProps.InputBaseFieldProps = {
+  name: "textField",
+  isRequired: true,
+  placeholder: "Text Field",
+};
+const textField: InputHelperProps.FieldProps = {
+  fieldType: "input",
+  inputFieldProps: textFieldProps,
+};
+
+//password input field
+const passwordFieldProps: InputHelperProps.CreateInputBaseProps = {
+  name: "password",
+  placeholder: "Password",
+  isRequired: true,
+  isPassword: true,
+};
+const password: InputHelperProps.FieldProps = {
+  fieldType: "input",
+  inputFieldProps: passwordFieldProps,
+};
+
+//input field with suffix [Same can be achived with prefix]
+const suffixFieldProps: InputHelperProps.CreateInputBaseProps = {
+  label: "Suffix Input",
+  name: "suffix",
+  placeholder: "Search",
+  isSearch: true,
+  suffix: <SearchIcon />,
+  isRequired: true,
+};
+const suffix: InputHelperProps.FieldProps = {
+  fieldType: "input",
+  inputFieldProps: suffixFieldProps,
+};
+```
+
+### Select Field Props
+
+```ts
+const selectOptions: InputHelperProps.SelectOption[] = [
+  { label: "1", value: "1" },
+  { label: "3", value: "3" },
+  { label: "5", value: "5" },
+];
+const selectFieldProps: InputHelperProps.CreateSelectBaseProps = {
+  label: "Select",
+  name: "select",
+  options: selectOptions,
+  isRequired: true,
+  defaultValue: "1",
+};
+const select: InputHelperProps.FieldProps = {
+  fieldType: "select",
+  inputFieldProps: selectFieldProps,
+};
+```
+
+### RichTextArea Field Props
+
+```ts
+const richTextAreaFieldProps: InputHelperProps.CreateRichTextAreaProps = {
+  name: "richTextArea",
+  initialHTMLValue: "",
+  label: "Rich Text Area*",
+  placeholder: "Enter text here...",
+  minHeight: getRichTextAreaMinHeight(),
+  isRequired: true,
+};
+const richTextArea: InputHelperProps.FieldProps = {
+  fieldType: "richTextArea",
+  inputFieldProps: richTextAreaFieldProps,
+};
+```
+
+## Field creation with props
+
+Form field can be created with three ways
+
+1. Creating single field, No need to specify input type like "input | select | richTextArea"
+
+```js
+createInputBaseField(textFieldProps); //kindly refer above props if confused about where it is defined
+createSelectBaseField(selectFieldProps);
+createRichTextArea(richTextAreaFieldProps);
+```
+
+2. Creating single field, by specifying input type
+
+```js
+createInputField(textField); //kindly refer above props if confused about where it is defined
+createInputField(select);
+createInputField(richTextArea);
+```
+
+3. Creating Multiple Fields
+
+```js
+createInputFields([textField, select, richTextArea]);
+```
+
+### Initial Values for Formik
+
+```js
+const formInitialValues = {
+  textField: "",
+  password: "",
+  suffix: "",
+  select: "1",
+  richTextArea: "",
+};
+```
+
+### Validation Schema for Formik
+
+```js
+const formValidationSchema = Yup.object({
+  textField: Yup.string().required("Please Enter text"),
+  password: Yup.string().required("Please Enter password"),
+  suffix: Yup.string().required("Please Enter text"),
+  select: Yup.string().required("Please select an option"),
+  richTextArea: Yup.string().required("Please Enter text"),
+});
+```
+
+# Formik form creation
+
+```ts
+<Formik
+  initialValues={formInitialValues}
+  validationSchema={formValidationSchema}
+  onSubmit={onSubmitHandler}
+>
+  {formik => (
+    <Form>
+      {createInputFields(LoginFormFields)}
+      <ButtonWrapper>
+        <Button
+          buttonCategory="main"
+          variant="plain"
+          onClick={event => {
+            event.preventDefault();
+            if (Object.keys(formik.touched).length > 0) {
+              if (formik.isValid) loginFormOnSubmit();
+            }
+            formik.setTouched(getRequiredInputFields(LoginFormFields));
+            formik.validateForm();
+          }}
+        >
+          Login
+        </Button>
+      </ButtonWrapper>
+    </Form>
+  )}
+</Formik>
+```

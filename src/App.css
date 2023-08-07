@@ -1,0 +1,230 @@
+@import "~antd/dist/antd.css";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@400;700&display=swap");
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  line-height: normal;
+}
+
+.custom-antd-datepicker {
+  background: linear-gradient(
+    42.65deg,
+    #9f71e9 -13.19%,
+    #504edb 20.83%,
+    #3580c6 53.75%,
+    #26ade2 91.07%
+  );
+  border-radius: 8px;
+  box-shadow: 0px 2px 7px rgba(36, 10, 62, 0.16);
+}
+
+.custom-antd-datepicker .ant-picker-panel-container {
+  border-radius: 8px;
+  margin: 1px;
+}
+
+.custom-antd-datepicker .ant-picker-month-btn,
+.custom-antd-datepicker .ant-picker-year-btn {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 16px;
+  color: #88919a;
+}
+
+.custom-antd-datepicker
+  .ant-picker-cell.ant-picker-cell-in-view
+  .ant-picker-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  color: #1879c4;
+  text-align: center;
+  height: 24px;
+  width: 24px;
+  margin-left: 6px;
+  border-radius: 100%;
+}
+
+.custom-antd-datepicker .ant-picker-cell .ant-picker-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  height: 24px;
+  width: 24px;
+  margin-left: 6px;
+  border-radius: 100%;
+}
+
+.custom-antd-datepicker .ant-picker-cell-selected .ant-picker-cell-inner {
+  background: linear-gradient(
+    42.65deg,
+    #9f71e9 -13.19%,
+    #504edb 20.83%,
+    #3580c6 53.75%,
+    #26ade2 91.07%
+  );
+  color: white !important;
+}
+
+.custom-antd-datepicker
+  .ant-picker-cell:hover:not(.ant-picker-cell-selected):not(.ant-picker-cell-range-start):not(.ant-picker-cell-range-end):not(.ant-picker-cell-range-hover-start):not(.ant-picker-cell-range-hover-end)
+  .ant-picker-cell-inner {
+  background: linear-gradient(
+    42.65deg,
+    #9f71e9 -13.19%,
+    #504edb 20.83%,
+    #3580c6 53.75%,
+    #26ade2 91.07%
+  );
+  color: white;
+}
+
+.custom-antd-datepicker .ant-picker-cell-inner ::before {
+  border-radius: 100%;
+}
+
+.custom-antd-datepicker .ant-picker-content td ::before {
+  height: 24px;
+  width: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-antd-datepicker
+  .ant-picker-cell-in-view
+  .ant-picker-cell-today
+  .ant-picker-cell-inner
+  ::before {
+  border-radius: 100%;
+}
+
+.custom-antd-datepicker .ant-picker-cell-today .ant-picker-cell-inner::before {
+  border-radius: 100%;
+}
+
+.ant-picker-today-btn {
+  color: #58b4fa;
+  font-family: "Montserrat";
+}
+
+.ant-picker-content th {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+
+  color: #88919a;
+}
+
+.ant-picker-prev-icon::before,
+.ant-picker-next-icon::before,
+.ant-picker-super-prev-icon::before,
+.ant-picker-super-next-icon::before {
+  width: 9px;
+  height: 9px;
+  border: 0 solid #a9b5d2;
+  border-width: 2px 0 0 2px;
+}
+
+.ant-picker-super-prev-icon::after,
+.ant-picker-super-next-icon::after {
+  width: 9px;
+  height: 9px;
+  border: 0 solid #a9b5d2;
+  border-width: 2px 0 0 2px;
+}
+
+.djobsAutocomplete {
+  z-index: 1;
+}
+
+/*Style for Autocomplete in Input*/
+.djobsAutocomplete .rc-virtual-list-holder {
+  max-height: 150px !important;
+}
+.djobsAutocomplete .rc-virtual-list-holder-inner {
+  max-height: 150px !important;
+  overflow-y: scroll;
+}
+
+.ant-select-dropdown.djobsAutocomplete.ant-select-dropdown-placement-bottomLeft {
+  background: #ffffff;
+  padding: 0px 6px;
+}
+
+.ant-select-item.ant-select-item-option {
+  font-family: Lexend;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: #4d5d75;
+  padding: 12px;
+  min-height: auto;
+}
+
+.ant-select-item.ant-select-item-option:hover {
+  font-family: Lexend;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  color: #1e96f2;
+  background: #f3f6ff;
+}
+
+/* Scrollbar color changes */
+::-webkit-scrollbar {
+  background: none;
+  width: 6px;
+  padding: 30px;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d6deed;
+  border-radius: 3px;
+}
+
+.djobsSelectField {
+  z-index: 1;
+}
+
+/* Djobs select scrollbar color*/
+.ant-select-dropdown.djobsSelectField.ant-select-dropdown-placement-bottomLeft {
+  background: #ffffff;
+  padding: 0px 6px;
+}
+
+.rc-virtual-list-scrollbar {
+  width: 6px !important;
+  background: none;
+  border-radius: 3px;
+}
+
+.rc-virtual-list-scrollbar-thumb {
+  background-color: #d6deed !important;
+}

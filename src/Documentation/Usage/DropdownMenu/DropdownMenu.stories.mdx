@@ -1,0 +1,328 @@
+import { Canvas, Meta, Story } from "@storybook/addon-docs";
+
+<Meta title="USAGE GUIDE/DropdownMenu" />
+
+## Usage
+
+This component is used to render a DropdownMenu
+
+## Imports
+
+```js
+//[These imports are must]
+import { DropdownMenu } from "@Components/TSolutions/Basic/DropdownMenu";
+```
+
+## DropdownMenu Props
+
+```js
+NOTE: `Best practice is to always include type while creating props,
+since it will help us to find errors and also provide with autocomplete`;
+```
+
+## These Props are must have to be passed
+
+```ts
+    variant: "default" | "filter" | "icon";
+    icon?: React.ReactNode;
+    menuVariant: "plain" | "primary" | "gradient";
+    filteredValue?: string;
+    filterName?: string;
+    filterCount?: number;
+    menuItems: Array<{ value: string; label: string; icon?: React.ReactNode }>;
+    menuPlacement: "right" | "left";
+    onClickHandler: (string) => void;
+```
+
+## DropdownMenu creation with props
+
+DropdownMenu can be created as mention below:
+
+```ts
+1. import { DropdownMenu } from "@Components/TSolutions/Basic/DropdownMenu";
+```
+
+2. We have to create useState to store and access the selected MenuItem Value.
+
+```ts
+const [selectedValue, setSelectedValue] = React.useState("");
+```
+
+3. to render Menuitems we have to pass array of object in menuItems prop and this array of object is consist of { value: string; label: string; icon?: React.ReactNode } ,
+   so for that we have to import or create the array in the parent componnet of DropdownMenu component.
+
+```ts
+    => (a) suppose we want to create the array in parent component and then pass it as a menuItems prop,
+       so the array can be made like this:
+
+    const data = [
+                    {
+                      value: "ALL",
+                      label: "ALL",
+                    },
+                    {
+                      value: "VIEW",
+                      label: "VIEW",
+                      icon: <SettingsIcon />, // this icon is optional.
+                    },
+                    { value: "EDIT", label: "EDIT" },
+                    { value: "ARCHIVE", label: "ARCHIVE" },
+                  ];
+```
+
+```ts
+    => (b) And if the Array is coming from other files then we have to import it from that.
+        i.e import {data} from "@utils"
+```
+
+4. Now use imported DropdownMenu Component and pass all the required props value.
+
+```ts
+   here, children is on which the DropdownMenu will render.
+
+1 . Creating Default DropdownMenu by specifying variant.
+
+    <DropdownMenu
+        variant="default"
+        menuVariant="gradient"
+        menuPlacement="left"
+        menuItems={data}  // this data is coming from as mention above in 3rd point.
+                          // and using this data MenuItems will render when dropdown will open.
+        filteredValue={selectedValue}
+        onClickHandler={value => {
+          setSelectedValue(value);
+        }}
+      />
+
+
+2. Creating Filter DropdownMenu without count by specifying variant.
+
+   <DropdownMenu
+        variant="filter"
+        filterName="Name"
+        menuVariant="primary"
+        menuPlacement="right"
+        menuItems={data}
+        filteredValue={selectedValue}
+        onClickHandler={value => {
+          setSelectedValue(value);
+        }}
+      />
+
+
+3. Creating Filter DropdownMenu with count by specifying variant.
+
+   <DropdownMenu
+        variant="filter"
+        filterName="Name"
+        menuVariant="gradient"
+        menuPlacement="right"
+        menuItems={data}
+        filterCount={100}
+        filteredValue={selectedValue}
+        onClickHandler={value => {
+          setSelectedValue(value);
+        }}
+      />
+
+
+4. Creating Icon DropdownMenu specifying variant.
+
+   <DropdownMenu
+        variant="icon"
+        menuVariant="primary"
+        icon={<SettingsIcon />}
+        menuPlacement="right"
+        filteredValue={selectedValue}
+        menuItems={data}
+        onClickHandler={value => {
+          setSelectedValue(value);
+        }}
+      />
+```
+
+### How MenuItems will render ?
+
+```ts
+
+const renderMenu = () => (
+  //menuItems is the prop where we passed the Array of Object from the parent component
+  <MenuItem menuVariant={menuVariant} menuPlacement={menuPlacement}>
+    {menuItems.map(
+      (
+        item: { value: string; label: string; icon?: React.ReactNode },
+        index: number
+      ) => (
+        <Flex
+          key={index}
+         onClick={() => {
+              onClickHandler(preValue =>
+                preValue === item.value ? menuItems[0].value : item.value
+              );
+              setMenuOpen(false);
+            }}
+          alignItems="center"
+          justifyContent={menuPlacement === "right" ? "end" : "start"}
+        >
+          {item.icon}
+          {item.label}
+        </Flex>
+      )
+    )}
+  </MenuItem>
+
+  => this renderMenu function will call inside DropdownMenu Component as Shown Below:
+
+ <DropdownContainer ref={ref}>
+      <Flex
+        flexDirection="column"
+        alignItems={menuPlacement === "right" ? "end" : "start"}
+      >
+        <div onClick={() => setMenuOpen(isMenuOpen => !isMenuOpen)}>
+          <DropDownButtonContainer
+            filteredValue={filteredValue}
+            menuItems={menuItems}
+          >
+            <Flex py="6px" alignItems="center">
+              {variant === "filter" ? (
+                filteredValue === menuItems[0].value ? (
+                  <Flex pr="5px">
+                    <FilterIcon color={theme.colors.black20} />
+                  </Flex>
+                ) : (
+                  <Flex pr="5px">
+                    <GradientFilterIocn />
+                  </Flex>
+                )
+              ) : variant === "icon" ? (
+                <IconContainer isMenuOpen={isMenuOpen}>{icon}</IconContainer>
+              ) : null}
+
+              {variant !== "icon" && (
+                <div>
+                  <span>
+                    {variant === "filter" ? filterName + ": " : ""}
+                    <span>{filteredValue}</span>
+                  </span>
+                </div>
+              )}
+            </Flex>
+
+            {variant === "filter" &&
+              filterCount > 0 &&
+              filteredValue !== menuItems[0].value && (
+                <FilteredCount>{filterCount}</FilteredCount>
+              )}
+
+            <Flex py="6px" pl="5px" alignItems="center">
+              {filteredValue === menuItems[0].value ? (
+                <DropdownIcon />
+              ) : (
+                <GradientDropdownIcon />
+              )}
+            </Flex>
+          </DropDownButtonContainer>
+        </div>
+        {isMenuOpen && (
+          <DropdownMenuPointerContainer
+            menuPlacement={menuPlacement}
+            variant={variant}
+          >
+            <DropdownMenuPointer
+              fill={
+                menuVariant === "gradient"
+                  ? menuPlacement === "right"
+                    ? theme.colors.menuArrow.right
+                    : theme.colors.menuArrow.left
+                  : menuVariant === "primary"
+                  ? theme.colors.black80
+                  : theme.colors.black10
+              }
+            />
+          </DropdownMenuPointerContainer>
+        )}
+      </Flex>
+      {isMenuOpen && (
+        <Menu menuPlacement={menuPlacement} menuVariant={menuVariant}>
+          {renderMenu()} // here renderMenu function will call and it will return the menuItems
+        </Menu>
+      )}
+    </DropdownContainer>
+);
+```
+
+## Final look of usage of Dropdown Component will look as below:
+
+```ts
+// this data is coming from as mention above in 3rd point.
+// and using this data MenuItems will render when dropdown will open.
+// we have to pass this array of object from parent componnet to render the menu items
+
+const data = [
+  {
+    value: "ALL",
+    label: "ALL",
+  },
+  {
+    value: "VIEW",
+    label: "VIEW",
+    icon: <SettingsIcon />, // this icon is optional.
+  },
+  { value: "EDIT", label: "EDIT" },
+  { value: "ARCHIVE", label: "ARCHIVE" },
+];
+
+const [selectedValue1, setSelectedValue1] = React.useState(data[0].value);
+const [selectedValue2, setSelectedValue2] = React.useState(data[0].value);
+const [selectedValue3, setSelectedValue3] = React.useState(data[0].value);
+const [selectedValue4, setSelectedValue4] = React.useState(data[0].value);
+
+return (
+
+<Flex justifyContent="space-between">
+  <DropdownMenu
+    variant="default"
+    menuVariant="gradient"
+    menuPlacement="left"
+    menuItems={data}
+    filteredValue={selectedValue1}
+    onClickHandler={value => {
+      setSelectedValue1(value);
+    }}
+  />
+  <DropdownMenu
+    variant="filter"
+    filterName="Name"
+    menuVariant="primary"
+    menuPlacement="right"
+    menuItems={data}
+    filteredValue={selectedValue2}
+    onClickHandler={value => {
+      setSelectedValue2(value);
+    }}
+  />
+  <DropdownMenu
+    variant="filter"
+    filterName="Name"
+    menuVariant="gradient"
+    menuPlacement="right"
+    menuItems={data}
+    filterCount={100}
+    filteredValue={selectedValue3}
+    onClickHandler={value => {
+      setSelectedValue3(value);
+    }}
+  />
+  <DropdownMenu
+    variant="icon"
+    menuVariant="primary"
+    icon={<SettingsIcon />}
+    menuPlacement="right"
+    filteredValue={selectedValue4}
+    menuItems={data}
+    onClickHandler={value => {
+      setSelectedValue4(value);
+    }}
+  />
+</Flex>
+```
