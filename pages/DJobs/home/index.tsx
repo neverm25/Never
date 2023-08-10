@@ -5,4 +5,6 @@ import { Home } from "@DJobs/Components";
 
 const HomePage: NextPage = () => <Home />;
 
+
+
 export default HomePage;
