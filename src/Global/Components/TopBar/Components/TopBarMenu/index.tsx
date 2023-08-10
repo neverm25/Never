@@ -14,7 +14,7 @@ export const TopBarMenu = (
   <Menu style={{ borderRadius: 8 }}>
     <Menu.Item
       key="0"
-      icon={<UserOutlined />}
+      icon={UserOutlined}
       style={{
         color: theme.colors.blue80,
         borderLeft: `3px solid ${theme.colors.blue80}`,
@@ -24,28 +24,28 @@ export const TopBarMenu = (
     </Menu.Item>
     <Menu.Item
       key="1"
-      icon={<TagOutlined />}
+      icon={TagOutlined}
       style={{ color: theme.colors.black100 }}
     >
       Tags
     </Menu.Item>
     <Menu.Item
       key="2"
-      icon={<LockOutlined />}
+      icon={LockOutlined}
       style={{ color: theme.colors.black100 }}
     >
       Privacy
     </Menu.Item>
     <Menu.Item
       key="3"
-      icon={<MessageOutlined />}
+      icon={MessageOutlined}
       style={{ color: theme.colors.black100 }}
     >
       Chat
     </Menu.Item>
     <Menu.Item
       key="4"
-      icon={<QuestionCircleOutlined />}
+      icon={QuestionCircleOutlined}
       style={{ color: theme.colors.black100 }}
     >
       Help?
@@ -53,7 +53,7 @@ export const TopBarMenu = (
     <Menu.Divider />
     <Menu.Item
       key="5"
-      icon={<LogoutOutlined />}
+      icon={LogoutOutlined}
       style={{ color: theme.colors.black100 }}
     >
       Logout
