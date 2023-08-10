@@ -1,3 +1,5 @@
+'use client'
+
 // #region Global Imports
 import React from "react";
 import ReactHtmlParser from "react-html-parser";
