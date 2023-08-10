@@ -1,5 +1,3 @@
-'use client'
-
 // #region Global Imports
 import React from "react";
 import { Col, Grid, Row } from "antd";

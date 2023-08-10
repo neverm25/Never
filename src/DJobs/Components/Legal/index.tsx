@@ -1,5 +1,3 @@
-'use client'
-
 // #Global Imports
 import React from "react";
 import styled from "styled-components";

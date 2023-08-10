@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, createContext, useEffect } from "react";
 import styled from "styled-components";
 

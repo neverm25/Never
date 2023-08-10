@@ -1,5 +1,3 @@
-'use client'
-
 // #region Global Imports
 import React, { useEffect } from "react";
 import { Grid } from "antd";
